@@ -17,9 +17,21 @@ services:
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
+    networks:
+      - raizes
+
+  npm:
+    image: node:20-alpine
+    container_name: raizes_npm
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    command: sh -c "npm pkg set packageManager='npm@$(npm -v)' && npm install && npm run dev"
     ports:
-      - "8000:8000"
       - "3000:3000"
+      - "8000:8000"
+    depends_on:
+      - app
     networks:
       - raizes
 

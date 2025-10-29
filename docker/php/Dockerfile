@@ -3,27 +3,21 @@ FROM php:${PHP_VERSION}-fpm-alpine
 
 RUN apk add --no-cache \
     git curl libpng-dev libjpeg-turbo-dev zip unzip \
-    oniguruma-dev postgresql-dev autoconf g++ make \
-    nodejs npm
+    oniguruma-dev postgresql-dev autoconf g++ make
 
 RUN docker-php-ext-configure gd --with-jpeg \
     && docker-php-ext-install -j$(nproc) pdo_pgsql pgsql gd bcmath exif pcntl
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-RUN npm install -g turbo
 
-WORKDIR /var/www
-COPY package.json turbo.json .npmrc* ./
-COPY backend/composer.* backend/
-COPY frontend/package.json frontend/
+WORKDIR /var/www/backend
 
-RUN npm install --include=dev
-RUN cd backend && composer install --no-dev --optimize-autoloader
+COPY backend/composer.* ./
+RUN composer install --no-scripts --no-autoloader
 
-COPY . .
-RUN npm install --package-lock-only
+COPY backend ./
+RUN composer dump-autoload --optimize
 
-RUN chown -R www-data:www-data backend/storage backend/bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-EXPOSE 8000 3000
 CMD ["php-fpm"]
