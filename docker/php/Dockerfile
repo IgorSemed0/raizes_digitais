@@ -1,3 +1,4 @@
+# raizes-digitais/docker/php/Dockerfile
 ARG PHP_VERSION=8.3
 FROM php:${PHP_VERSION}-fpm-alpine
 
@@ -30,17 +31,20 @@ RUN npm install -g turbo
 # --- Working directory: entire monorepo ---
 WORKDIR /var/www
 
+# --- Copy root config ---
 COPY package.json turbo.json .npmrc* ./
+
+# --- Copy workspace package.json files ---
 COPY backend/composer.* backend/
 COPY frontend/package.json frontend/
-COPY packages/*/package.json packages/*/
 
-# --- Install root + workspace deps ---
+# --- Install root + workspace deps (only frontend/backend) ---
 RUN npm ci --include=dev
 
 # --- Install Laravel deps ---
 RUN cd backend && composer install --no-dev --optimize-autoloader
 
+# --- Copy full source ---
 COPY . .
 
 # --- Permissions ---
@@ -48,7 +52,7 @@ RUN chown -R www-data:www-data \
     backend/storage \
     backend/bootstrap/cache
 
-# --- Expose ports for dev servers ---
+# --- Expose ports ---
 EXPOSE 8000 3000
 
 # --- Start PHP-FPM ---
