@@ -6,8 +6,9 @@
     "scripts": {
         "dev": "php artisan serve --host=0.0.0.0 --port=8000",
         "lint": "php-cs-fixer fix --dry-run --diff",
-        "format": "php-cs-fixer fix"
-      }
+        "format": "php-cs-fixer fix",
+        "start": "php artisan serve --host=0.0.0.0 --port=8000"
+    },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
         "axios": "^1.11.0",
