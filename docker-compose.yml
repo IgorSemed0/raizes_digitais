@@ -1,10 +1,10 @@
-version: "3.9"
-
 services:
   app:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+      args:
+        PHP_VERSION: 8.3
     container_name: raizes_php
     restart: unless-stopped
     working_dir: /var/www/backend
@@ -25,7 +25,7 @@ services:
     container_name: raizes_nginx
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./backend:/var/www/backend
       - ./frontend/.next:/var/www/frontend/.next
@@ -46,7 +46,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - raizes
 
