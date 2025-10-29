@@ -61,7 +61,6 @@ yarn-debug.log*
 # next.js
 /frontend//.next/
 /frontend//out/
-/frontend/
 # production
 /frontend//build
 # misc
