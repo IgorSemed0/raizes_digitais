@@ -38,14 +38,17 @@ COPY package.json turbo.json .npmrc* ./
 COPY backend/composer.* backend/
 COPY frontend/package.json frontend/
 
-# --- Install root + workspace deps (only frontend/backend) ---
-RUN npm ci --include=dev
+# --- Install deps (use `npm install` until lockfile exists) ---
+RUN npm install --include=dev
 
 # --- Install Laravel deps ---
 RUN cd backend && composer install --no-dev --optimize-autoloader
 
 # --- Copy full source ---
 COPY . .
+
+# --- Generate lockfile for future `ci` ---
+RUN npm install --package-lock-only
 
 # --- Permissions ---
 RUN chown -R www-data:www-data \
