@@ -7,9 +7,9 @@ services:
         PHP_VERSION: 8.3
     container_name: raizes_php
     restart: unless-stopped
-    working_dir: /var/www/backend
+    working_dir: /var/www
     volumes:
-      - ./backend:/var/www/backend
+      - .:/var/www
       - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
     depends_on:
       - postgres
@@ -17,6 +17,9 @@ services:
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
+    ports:
+      - "8000:8000"
+      - "3000:3000"
     networks:
       - raizes
 

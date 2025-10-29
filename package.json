@@ -14,7 +14,8 @@
     "test": "turbo test"
   },
   "devDependencies": {
-    "turbo": "^2.2.0",
-    "prettier": "^3.3.3"
-  }
+    "prettier": "^3.3.3",
+    "turbo": "^2.2.0"
+  },
+  "packageManager": "npm@11.3.0"
 }
