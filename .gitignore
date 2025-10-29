@@ -1,0 +1,92 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log*
+.pnpm-debug.log*
+
+# Turborepo
+.turbo
+
+# Docker
+.docker/
+
+# Laravel
+/backend/.env
+/backend/storage/**/*.log
+/backend/vendor/
+/backend/bootstrap/cache/*.php
+/backend/*.log
+/backend/.DS_Store
+/backend/.env
+/backend/.env.backup
+/backend/.env.production
+/backend/.phpactor.json
+/backend/.phpunit.result.cache
+/backend/.fleet
+/backend/.idea
+/backend/.nova
+/backend/.phpunit.cache
+/backend/.vscode
+/backend/.zed
+/backend/auth.json
+/node_modules
+/backend/public/build
+/backend/public/hot
+/backend/public/storage
+/backend/storage/*.key
+/backend/storage/pail
+/backend/vendor
+/backend/Homestead.json
+/backend/Homestead.yaml
+/backend/Thumbs.db
+
+
+# Next
+/frontend/.next/
+/frontend/out/
+/frontend/.env.local
+
+# dependencies
+/frontend//node_modules
+/frontend//.pnp
+/frontend/.pnp.*
+/frontend/.yarn/*
+/frontend/!.yarn/patches
+/frontend/!.yarn/plugins
+/frontend/!.yarn/releases
+/frontend/!.yarn/versions
+/frontend/
+# testing
+/frontend//coverage
+/frontend/
+# next.js
+/frontend//.next/
+/frontend//out/
+/frontend/
+# production
+/frontend//build
+/frontend/
+# misc
+/frontend/.DS_Store
+/frontend/*.pem
+/frontend/
+# debug
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/.pnpm-debug.log*
+/frontend/
+# env files (can opt-in for committing if needed)
+/frontend/.env*
+/frontend/
+# vercel
+/frontend/.vercel
+/frontend/
+# typescript
+/frontend/*.tsbuildinfo
+/frontend/next-env.d.ts
+
+# OS
+.DS_Store
+Thumbs.db

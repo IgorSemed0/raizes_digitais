@@ -1,0 +1,20 @@
+{
+  "name": "raizes-digitais",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "format": "prettier --write .",
+    "test": "turbo test"
+  },
+  "devDependencies": {
+    "turbo": "^2.2.0",
+    "prettier": "^3.3.3"
+  }
+}

@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: raizes_php
+    restart: unless-stopped
+    working_dir: /var/www/backend
+    volumes:
+      - ./backend:/var/www/backend
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+    networks:
+      - raizes
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: raizes_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./backend:/var/www/backend
+      - ./frontend/.next:/var/www/frontend/.next
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - raizes
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: raizes_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: raizes
+      POSTGRES_USER: raizes
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - raizes
+
+  redis:
+    image: redis:7-alpine
+    container_name: raizes_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    networks:
+      - raizes
+
+volumes:
+  pgdata:
+
+networks:
+  raizes:
+    driver: bridge
