@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 
 interface ReusableFormProps<T extends FieldValues> {
-  schema: z.ZodType<T, any, any>
+  schema: z.ZodType<T, T>
   onSubmit: (data: T) => void | Promise<void>
   defaultValues?: DefaultValues<T>
   children: (form: UseFormReturn<T>) => ReactNode

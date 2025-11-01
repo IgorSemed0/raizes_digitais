@@ -73,7 +73,7 @@ export default function Section2() {
               transition={{ duration: 0.3, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-900 border-slate-800 hover:border-emerald-500/50 transition-all duration-300 shadow-lg hover:shadow-emerald-500/10">
+              <Card className="h-full cursor-pointer bg-slate-900 border-slate-800 hover:border-emerald-500/50 transition-all duration-300 shadow-lg hover:shadow-emerald-500/10">
                 <CardHeader className="pb-4">
                   <div
                     className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-linear-to-br ${feature.color} text-white shadow-lg mb-4`}

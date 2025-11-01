@@ -36,7 +36,7 @@ class ApiClient {
     const data = await response.json()
 
     if (!response.ok) {
-      const error: ApiError = {
+      const error:  ApiError = {
         success: false,
         error: data.error || "Erro desconhecido",
         details: data.details,

@@ -26,15 +26,15 @@ type AuthState = {
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
-      user: null, // Nenhum usuário logado inicialmente
-      token: null, // Nenhum token inicialmente
-      isAuthenticated: false, // Não autenticado inicialmente
+      user: null,
+      token: null, 
+      isAuthenticated: false,
 
       login: (user, token) => {
         set({
-          user, // Salva dados do usuário
-          token, // Salva token JWT
-          isAuthenticated: true, // Marca como autenticado
+          user, 
+          token, 
+          isAuthenticated: true, 
         })
       },
 

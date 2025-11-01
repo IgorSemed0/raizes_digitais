@@ -12,7 +12,9 @@ import { useToast } from "@/hooks/use-toast"
 
 type AuthResponse = ApiResponse<{
   user: User
-  token: string
+  token_type: string
+  access_token: string
+
 }>
 export function useLoginMutation() {
   const login = useAuthStore((state) => state.login)
@@ -20,16 +22,16 @@ export function useLoginMutation() {
   const { toast } = useToast()
 
   return useMutation<
-    AuthResponse, // Tipo do sucesso
-    ApiError, // Tipo do erro
-    LoginFormData // Tipo dos dados de entrada
+    AuthResponse, 
+    ApiError, 
+    LoginFormData 
   >({
     mutationFn: async (data) => {
       return apiClient.post<AuthResponse>("/auth/login", data)
     },
-
     onSuccess: (response) => {
-      login(response.data.user, response.data.token)
+      login(response.data.user, response.data.token_type)
+    console.log("mutationFn called with data:", response.data);
 
       toast({
         title: "Login realizado!",
@@ -59,7 +61,7 @@ export function useRegisterMutation() {
     },
 
     onSuccess: (response) => {
-      login(response.data.user, response.data.token)
+      login(response.data.user, response.data.token_type)
 
       toast({
         title: "Conta criada!",

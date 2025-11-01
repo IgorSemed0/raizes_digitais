@@ -52,16 +52,6 @@ export default function Hero() {
         />
 
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-         {/*  <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium mb-8 backdrop-blur-sm"
-          >
-            <Sparkles className="w-4 h-4" />
-            Conectando +50K famílias
-          </motion.div> */}
-
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -93,7 +83,7 @@ export default function Hero() {
             <Button
               onClick={() => setAberto(true)}
               size="lg"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-6 text-lg rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-emerald-500/25"
+              className="bg-emerald-600 cursor-pointer hover:bg-emerald-700 text-white font-semibold px-8 py-6 text-lg rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-emerald-500/25"
             >
               <TreeDeciduous className="w-5 h-5 mr-2" />
               Criar Minha Árvore
@@ -101,7 +91,7 @@ export default function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white font-semibold px-8 py-6 text-lg rounded-xl transition-all duration-300 backdrop-blur-sm bg-transparent"
+              className="border-2 cursor-pointer border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white font-semibold px-8 py-6 text-lg rounded-xl transition-all duration-300 backdrop-blur-sm bg-transparent"
             >
               Ver Como Funciona
             </Button>
@@ -120,7 +110,7 @@ export default function Hero() {
             ].map((stat, index) => (
               <div
                 key={index}
-                className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-xl p-6 hover:border-emerald-500/50 transition-colors"
+                className="bg-slate-900/50 cursor-pointer backdrop-blur-sm border border-slate-800 rounded-xl p-6 hover:border-emerald-500/50 transition-colors"
               >
                 <stat.icon className="w-8 h-8 text-emerald-400 mb-3 mx-auto" />
                 <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>

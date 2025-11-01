@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { fadeIn, staggerContainer } from "@/lib/motion"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Mail, Instagram, Twitter, Facebook, TreePine, Heart, Users, ArrowRight } from "lucide-react"
+import { Mail, TreePine, Heart, Users, ArrowRight } from "lucide-react"
 
 const Footer = () => {
   const AnoActual = new Date().getFullYear()
@@ -85,37 +85,20 @@ const Footer = () => {
               <div className="flex items-start">
                 <Mail size={18} className="text-emerald-400 mr-3 mt-1 shrink-0" />
                 <div>
-                  <p className="text-slate-400 text-sm">onono-tecnologies@hotmail.com</p>
+                  <p className="text-slate-400 text-sm text-nowrap">onono-tecnologies@hotmail.com</p>
                   <p className="text-slate-500 text-xs">Suporte e parcerias</p>
                 </div>
               </div>
               <div className="flex items-start">
                 <Users size={18} className="text-emerald-400 mr-3 mt-1 shrink-0" />
                 <div>
-                  <p className="text-slate-400 text-sm">+50K famílias conectadas</p>
+                  <p className="text-slate-400 text-sm">+0 famílias conectadas</p>
                   <p className="text-slate-500 text-xs">Junte-se à comunidade</p>
                 </div>
               </div>
             </div>
 
-            <div className="space-y-3">
-              <p className="text-slate-400 text-sm font-medium">Siga-nos</p>
-              <div className="flex gap-3">
-                {[
-                  { icon: Instagram, href: "#" },
-                  { icon: Twitter, href: "#" },
-                  { icon: Facebook, href: "#" },
-                ].map((social, index) => (
-                  <Link
-                    key={index}
-                    href={social.href}
-                    className="bg-slate-800 hover:bg-emerald-600 p-2.5 rounded-lg transition-colors group"
-                  >
-                    <social.icon size={18} className="text-slate-400 group-hover:text-white transition-colors" />
-                  </Link>
-                ))}
-              </div>
-            </div>
+
           </motion.div>
         </div>
 
@@ -124,8 +107,8 @@ const Footer = () => {
             variants={fadeIn("up", "spring", 0.6, 0.75)}
             className="text-slate-500 text-sm mb-4 md:mb-0 flex items-center gap-2"
           >
-            © {AnoActual} Raízes Digitais. Feito com <Heart size={14} className="text-emerald-400 fill-emerald-400" />{" "}
-            para famílias.
+            © {AnoActual} Raízes Digitais. Todos Direitos Reservados. Feito com{" "}
+            <Heart size={14} className="text-emerald-400 fill-emerald-400" /> por Onono Technologies.
           </motion.p>
           <motion.div variants={fadeIn("up", "spring", 0.7, 0.75)} className="flex space-x-6">
             {["Privacidade", "Cookies", "Diretrizes"].map((item, index) => (
