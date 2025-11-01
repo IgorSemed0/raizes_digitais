@@ -4,7 +4,6 @@ import "./globals.css";
 import Providers from "./providers";
 import { ToastProvider } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster"
-import Footer from "@/components/footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,7 +31,6 @@ export default function RootLayout({
            <ToastProvider>
           <main className="min-h-screen bg-slate-950">
             {children}
-          <Footer />
           </main>
           <Toaster />
         </ToastProvider>

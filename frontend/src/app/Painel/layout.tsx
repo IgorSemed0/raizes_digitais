@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "@app/globals.css";
+import "../globals.css";
 import Providers from "@/app/providers";
 import { ToastProvider } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster"
-import Footer from "@/components/footer";
+import Navbar from "./components/navbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "Faça login na sua conta Raízes Digitais",
 };
 
-export default function RootLayout({
+export default function RootLayout1({
   children,
 }: {
   children: React.ReactNode;
@@ -30,9 +30,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
            <ToastProvider>
-          <main className="min-h-screen bg-slate-950">
+          <main className="min-h-screen">
+            <Navbar />
             {children}
-          <Footer />
           </main>
           <Toaster />
         </ToastProvider>

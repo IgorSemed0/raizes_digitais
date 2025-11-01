@@ -5,9 +5,9 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 interface FormFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string 
-  error?: string 
-  helperText?: string 
+  label: string // Texto do label
+  error?: string // Mensagem de erro (opcional)
+  helperText?: string // Texto de ajuda (opcional)
 }
 
 export const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
@@ -25,7 +25,7 @@ export const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
 
         <Input
           id={fieldId}
-          ref={ref} 
+          ref={ref} // Ref para integração com React Hook Form
           className={cn(error && "border-destructive focus-visible:ring-destructive", className)}
           aria-invalid={!!error}
           aria-describedby={error ? `${fieldId}-error` : undefined}

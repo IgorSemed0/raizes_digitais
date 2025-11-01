@@ -1,7 +1,7 @@
 "use client"
 
 import { useMutation } from "@tanstack/react-query"
-
+import { useRouter } from "next/navigation"
 import { apiClient, type ApiResponse, type ApiError } from "@/lib/api"
 
 import { useAuthStore, type User } from "@/stores/auth-store"
@@ -18,7 +18,7 @@ type AuthResponse = ApiResponse<{
 }>
 export function useLoginMutation() {
   const login = useAuthStore((state) => state.login)
-
+  const router=useRouter()
   const { toast } = useToast()
 
   return useMutation<
@@ -32,7 +32,7 @@ export function useLoginMutation() {
     onSuccess: (response) => {
       login(response.data.user, response.data.token_type)
     console.log("mutationFn called with data:", response.data);
-
+      router.push("/Painel")
       toast({
         title: "Login realizado!",
         description: `Bem-vindo de volta, ${response.data.user.name}!`,

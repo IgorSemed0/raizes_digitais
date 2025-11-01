@@ -3,6 +3,7 @@ import React from 'react'
 import Section1 from '@/components/section1'
 import Section2 from '@/components/section2'
 import Navbar from '@/components/navbar'
+import Footer from "@/components/footer";
 import Galeria from '@/components/galeria'
 import CTA from '@/components/CTA'
 export default function page() {
@@ -14,6 +15,8 @@ export default function page() {
       <Galeria />
       <Section2 />
       <CTA />
+      <Footer />
+      
     </div>
   )
 }
