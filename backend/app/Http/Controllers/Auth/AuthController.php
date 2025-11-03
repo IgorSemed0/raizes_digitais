@@ -20,8 +20,8 @@ class AuthController extends Controller
             'vc_mnome' => 'nullable|string|max:255',
             'vc_unome' => 'required|string|max:255',
             'vc_user_name' => 'required|string|max:255|unique:users',
-            'vc_foto_perfil' => 'nullable|string|max:255',
-            'vc_foto_perfil_capa' => 'nullable|string|max:255',
+            'vc_foto_perfil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'vc_foto_perfil_capa' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'txt_biografia' => 'nullable|string',
             'dt_nascimento' => 'required|date',
             'vc_genero' => 'required|string|max:50',
@@ -33,19 +33,30 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $user = User::create([
+         $data = [
             'vc_pnome' => $request->vc_pnome,
             'vc_mnome' => $request->vc_mnome,
             'vc_unome' => $request->vc_unome,
             'vc_user_name' => $request->vc_user_name,
-            'vc_foto_perfil' => $request->vc_foto_perfil,
-            'vc_foto_perfil_capa' => $request->vc_foto_perfil_capa,
             'txt_biografia' => $request->txt_biografia,
             'dt_nascimento' => $request->dt_nascimento,
             'vc_genero' => $request->vc_genero,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ]);
+        ];
+           
+        if ($request->hasFile('vc_foto_perfil')) {
+            $fotoPerfilPath = $request->file('vc_foto_perfil')->store('profiles', 'public');
+            $data['vc_foto_perfil'] = $fotoPerfilPath;
+        }
+
+       
+        if ($request->hasFile('vc_foto_perfil_capa')) {
+            $fotoCapaPath = $request->file('vc_foto_perfil_capa')->store('covers', 'public');
+            $data['vc_foto_perfil_capa'] = $fotoCapaPath;
+        }
+
+        $user = User::create($data);
 
         $token = JWTAuth::fromUser($user);
 
@@ -81,6 +92,8 @@ class AuthController extends Controller
                     'id' => $user->id,
                     'vc_user_name' => $user->vc_user_name,
                     'email' => $user->email,
+                    'vc_foto_perfil' => $user->vc_foto_perfil ? asset('storage/' . $user->vc_foto_perfil) : null,
+                'vc_foto_perfil_capa' => $user->vc_foto_perfil_capa ? asset('storage/' . $user->vc_foto_perfil_capa) : null,
                 ]
             ]);
 
