@@ -5,13 +5,13 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 Route::prefix('auth')->group(function () {
-    Route::post('/register', 'App\Http\Controllers\AuthController@register');
-    Route::post('/login', 'App\Http\Controllers\AuthController@login');
+    Route::post('/register', 'App\Http\Controllers\Auth\AuthController@register');
+    Route::post('/login', 'App\Http\Controllers\Auth\AuthController@login');
     
     Route::middleware('jwt.auth')->group(function () {
-        Route::post('/logout', 'App\Http\Controllers\AuthController@logout');
-        Route::post('/refresh', 'App\Http\Controllers\AuthController@refresh');
-        Route::get('/me', 'App\Http\Controllers\AuthController@me');
+        Route::post('/logout', 'App\Http\Controllers\Auth\AuthController@logout');
+        Route::post('/refresh', 'App\Http\Controllers\Auth\AuthController@refresh');
+        Route::get('/me', 'App\Http\Controllers\Auth\AuthController@me');
     });
 });
 

@@ -26,7 +26,7 @@ class AuthController extends Controller
             'dt_nascimento' => 'required|date',
             'vc_genero' => 'required|string|max:50',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
         ]);
 
         if ($validator->fails()) {
@@ -73,6 +73,7 @@ class AuthController extends Controller
             $token = JWTAuth::fromUser($user);
 
             return response()->json([
+                'message' => 'Usuário logado com sucesso',
                 'access_token' => $token,
                 'token_type' => 'bearer',
                 'expires_in' => config('jwt.ttl') * 60,
