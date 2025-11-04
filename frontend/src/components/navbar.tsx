@@ -1,10 +1,10 @@
 "use client"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "./ui/button"
 import { TreePine, Menu, X } from "lucide-react"
 import { Cadastro } from "./cadastro"
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [cadastroModal, setCadastroModal] = useState(false)
@@ -15,8 +15,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="bg-linear-to-br from-emerald-500 to-green-600 p-2 rounded-lg group-hover:scale-110 transition-transform">
-            <TreePine className="w-6 h-6 text-white" />
-
+              <TreePine className="w-6 h-6 text-white" />
             </div>
             <span className="font-bold text-xl text-white">
               Raízes<span className="text-emerald-400">Digitais</span>
@@ -39,7 +38,10 @@ export default function Navbar() {
             <Button variant="ghost" className="text-slate-300 hover:text-white hover:bg-slate-800">
               Entrar
             </Button>
-            <Button onClick={() => setCadastroModal(true)} className="bg-emerald-600 hover:bg-emerald-700 text-white">
+            <Button 
+              onClick={() => setCadastroModal(true)} 
+              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+            >
               Começar
             </Button>
           </div>
@@ -66,7 +68,6 @@ export default function Navbar() {
               >
                 Explorar
               </Link>
-
               <Link
                 href="/explore"
                 className="text-slate-300 hover:text-emerald-400 py-2 font-medium transition-colors"
@@ -74,7 +75,6 @@ export default function Navbar() {
               >
                 Comunidade
               </Link>
-
               <Link
                 href="/upload"
                 className="text-slate-300 hover:text-emerald-400 py-2 font-medium transition-colors"
@@ -84,7 +84,13 @@ export default function Navbar() {
               </Link>
 
               <div className="pt-4 flex flex-col space-y-3">
-                <Button onClick={() => setCadastroModal(true)} className="w-full bg-emerald-600 hover:bg-emerald-700">
+                <Button 
+                  onClick={() => {
+                    setCadastroModal(true)
+                    setIsMenuOpen(false)
+                  }} 
+                  className="w-full bg-emerald-600 hover:bg-emerald-700"
+                >
                   Começar
                 </Button>
                 <Button
@@ -97,19 +103,15 @@ export default function Navbar() {
             </div>
           </div>
         )}
-
-        {cadastroModal && (
-          <Dialog open={cadastroModal} onOpenChange={setCadastroModal}>
-            <DialogTrigger />
-            <DialogContent className=" bg-slate-900 border-slate-800">
-              <DialogHeader>
-                <DialogTitle className="text-center text-white"></DialogTitle>
-              </DialogHeader>
-              <Cadastro />
-            </DialogContent>
-          </Dialog>
-        )}
       </div>
+
+      <Cadastro 
+        open={cadastroModal}
+        onOpenChange={setCadastroModal}
+        onSuccess={() => {
+          console.log("Cadastro realizado com sucesso!")
+        }}
+      />
     </nav>
   )
 }

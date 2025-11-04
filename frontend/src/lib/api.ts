@@ -1,11 +1,10 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"
 
 export type ApiResponse<T> = {
   success: true 
   data: T 
   message?: string 
 }
-
 export type ApiError = {
   success: false 
   error: string 
@@ -15,8 +14,9 @@ export type ApiError = {
 
 class ApiClient {
   private baseURL: string
-
+  
   constructor(baseURL: string) {
+    
     this.baseURL = baseURL
   }
 
@@ -39,10 +39,10 @@ class ApiClient {
       const error:  ApiError = {
         success: false,
         error: data.error || "Erro desconhecido",
-        details: data.details,
+        details: data,
         statusCode: response.status,
       }
-      throw error
+      throw error 
     }
 
     return data
@@ -65,10 +65,20 @@ class ApiClient {
     body: unknown,
     token?: string, 
   ): Promise<T> {
+    const eFormData = body instanceof FormData
+    let headers:Record<string, string>
+    let requestBody: BodyInit
+    if (eFormData) {
+      headers = token ? { "Authorization": `Bearer ${token}` } : {}
+      requestBody = body as FormData
+    } else {
+      headers = this.getHeaders(token)
+      requestBody = JSON.stringify(body)
+    }
     const response = await fetch(`${this.baseURL}${endpoint}`, {
       method: "POST",
-      headers: this.getHeaders(token),
-      body: JSON.stringify(body), 
+      headers: headers,
+      body: requestBody, 
     })
 
     return this.handleResponse<T>(response)

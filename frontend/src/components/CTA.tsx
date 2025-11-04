@@ -51,7 +51,7 @@ export default function CTA() {
           </div>
 
           <p className="text-sm text-slate-500 mt-8">
-            Sem cartão de crédito necessário • Cancele quando quiser • 100% gratuito
+            Protegido por segurança, privacidade e criptografia de ponta a ponta.
           </p>
         </motion.div>
       </div>

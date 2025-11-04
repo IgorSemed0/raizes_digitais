@@ -2,11 +2,9 @@ import { create } from "zustand"
 import { persist, createJSONStorage } from "zustand/middleware"
 
 export type User = {
-  id: string 
-  name: string 
-  email: string 
-  avatar?: string 
-  createdAt: string
+ id:number
+    vc_user_name:string
+    email:string
 }
 
 type AuthState = {

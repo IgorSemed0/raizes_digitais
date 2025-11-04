@@ -6,46 +6,68 @@ import { apiClient, type ApiResponse, type ApiError } from "@/lib/api"
 
 import { useAuthStore, type User } from "@/stores/auth-store"
 
-import type { LoginFormData, RegisterFormData } from "@/lib/validacao"
+import type { LoginFormData ,RegisterFormData} from "@/lib/validacao"
 
 import { useToast } from "@/hooks/use-toast"
 
-type AuthResponse = ApiResponse<{
-  user: User
-  token_type: string
-  access_token: string
+type AuthResponseLogin = {
+  message: string;
+  user:User
+  token_type: string;
+  access_token: string;
+  expires_in: number;
 
-}>
+}
+type AuthResponseRegistro = {
+  message: string;
+  user:User
+  token:string
+
+}
 export function useLoginMutation() {
   const login = useAuthStore((state) => state.login)
   const router=useRouter()
   const { toast } = useToast()
 
   return useMutation<
-    AuthResponse, 
+    AuthResponseLogin, 
     ApiError, 
     LoginFormData 
   >({
     mutationFn: async (data) => {
-      return apiClient.post<AuthResponse>("/auth/login", data)
+      return apiClient.post<AuthResponseLogin>("/auth/login", data)
     },
     onSuccess: (response) => {
-      login(response.data.user, response.data.token_type)
-    console.log("mutationFn called with data:", response.data);
+      login(response.user, response.access_token)
       router.push("/Painel")
       toast({
         title: "Login realizado!",
-        description: `Bem-vindo de volta, ${response.data.user.name}!`,
+        description: `Bem-vindo de volta, ${response.user.vc_user_name}!`,
       })
     },
 
-    onError: (error) => {
-      toast({
-        title: "Erro no login",
-        description: error.error || "Não foi possível fazer login",
-        variant: "destructive", 
-      })
-    },
+    onError: (error: ApiError) => {
+    if (error.statusCode === 400 && error.details) {
+        const Errors = error.details as Record<string, string[]>;
+        
+        const primeiroErrorKey = Object.keys(Errors)[0];
+        const pimeiroErrorMessage = Errors[primeiroErrorKey][0];
+        
+        toast({
+            title: "Erro de Validação",
+            description: pimeiroErrorMessage, 
+            variant: "destructive",
+        });
+        
+        return; 
+    }
+
+    toast({
+        title: "Erro no registro",
+        description: error.error || "Não foi possível criar sua conta",
+        variant: "destructive",
+    });
+},
   })
 }
 
@@ -53,15 +75,14 @@ export function useRegisterMutation() {
   const login = useAuthStore((state) => state.login)
   const { toast } = useToast()
 
-  return useMutation<AuthResponse, ApiError, RegisterFormData>({
-    mutationFn: async (data) => {
-      const { ...registerData } = data
+  return useMutation<AuthResponseRegistro, ApiError, RegisterFormData>({
+    mutationFn: async (formData) => {
 
-      return apiClient.post<AuthResponse>("/auth/registro", registerData)
+      return apiClient.post<AuthResponseRegistro>("/auth/register", formData)
     },
 
     onSuccess: (response) => {
-      login(response.data.user, response.data.token_type)
+      login(response.user, response.token)
 
       toast({
         title: "Conta criada!",

@@ -7,7 +7,7 @@ import type { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 
-interface ReusableFormProps<T extends FieldValues> {
+interface ReutilizavelFormProps<T extends FieldValues> {
   schema: z.ZodType<T, T>
   onSubmit: (data: T) => void | Promise<void>
   defaultValues?: DefaultValues<T>
@@ -16,7 +16,7 @@ interface ReusableFormProps<T extends FieldValues> {
   isLoading?: boolean
   className?: string
 }
-export function ReusableForm<T extends FieldValues>({
+export function ReutilizavelForm<T extends FieldValues>({
   schema,
   onSubmit,
   defaultValues,
@@ -24,7 +24,7 @@ export function ReusableForm<T extends FieldValues>({
   submitLabel = "Enviar",
   isLoading = false,
   className,
-}: ReusableFormProps<T>) {
+}: ReutilizavelFormProps<T>) {
   const form = useForm<T>({
     
       mode: "onSubmit",

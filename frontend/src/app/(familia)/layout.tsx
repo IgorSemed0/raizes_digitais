@@ -1,0 +1,15 @@
+import Navbar from "@/components/navbar";
+export default function FamiliaLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+        <main className="flex-1 overflow-x-hidden overflow-y-auto">
+          <div className="container mx-auto px-6 py-8">
+            <Navbar/>
+            {children}
+          </div>
+        </main>
+  );
+}
