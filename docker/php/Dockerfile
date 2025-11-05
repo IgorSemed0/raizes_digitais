@@ -33,6 +33,8 @@ WORKDIR /var/www
 
 # --- Copy root config ---
 COPY package.json turbo.json .npmrc* ./
+# adicione esta linha para o lockfile
+COPY package-lock.json ./
 
 # --- Copy workspace package.json files ---
 COPY backend/composer.* backend/
@@ -41,11 +43,14 @@ COPY frontend/package.json frontend/
 # --- Install root + workspace deps (only frontend/backend) ---
 RUN npm ci --include=dev
 
-# --- Install Laravel deps ---
-RUN cd backend && composer install --no-dev --optimize-autoloader
+# --- Install Laravel deps (sem scripts porque ainda não há artisan)---
+RUN cd backend && composer install --no-dev --no-scripts --optimize-autoloader
 
 # --- Copy full source ---
 COPY . .
+
+# --- Rodar scripts do Laravel agora que o código existe ---
+    RUN php -d variables_order=EGPCS backend/artisan package:discover --ansi || true
 
 # --- Permissions ---
 RUN chown -R www-data:www-data \
