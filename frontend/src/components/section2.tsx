@@ -14,7 +14,7 @@ export default function Section2() {
     {
       icon: <Album className="w-6 h-6" />,
       titulo: "Álbuns Colaborativos",
-      descricao: "Crie álbuns temáticos e convide familiares para adicionar fotos e memórias juntos.",
+      descricao: "Crie álbuns temáticos e convite familiares para adicionar fotos e memórias juntos.",
       color: "from-green-500 to-teal-600",
     },
     {
@@ -44,7 +44,7 @@ export default function Section2() {
   ]
 
   return (
-    <section className="w-full py-20 bg-slate-950">
+    <section className="w-full py-20 bg-linear-to-br from-white via-gray-50 to-emerald-50 dark:from-slate-950 dark:via-slate-900 dark:to-emerald-950/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -53,12 +53,12 @@ export default function Section2() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-sm font-medium mb-6">
             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
             Recursos Poderosos
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Tudo para Sua Família</h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">Tudo para Sua Família</h2>
+          <p className="text-xl text-gray-600 dark:text-slate-400 max-w-2xl mx-auto">
             Ferramentas completas para preservar, compartilhar e celebrar sua história familiar
           </p>
         </motion.div>
@@ -73,17 +73,17 @@ export default function Section2() {
               transition={{ duration: 0.3, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-slate-900 border-slate-800 hover:border-emerald-500/50 transition-all duration-300 shadow-lg hover:shadow-emerald-500/10">
+              <Card className="h-full cursor-pointer bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-gray-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 shadow-sm hover:shadow-md">
                 <CardHeader className="pb-4">
                   <div
                     className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-linear-to-br ${feature.color} text-white shadow-lg mb-4`}
                   >
                     {feature.icon}
                   </div>
-                  <CardTitle className="text-xl text-white">{feature.titulo}</CardTitle>
+                  <CardTitle className="text-xl text-gray-900 dark:text-white">{feature.titulo}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-slate-400 leading-relaxed">{feature.descricao}</p>
+                  <p className="text-gray-600 dark:text-slate-400 leading-relaxed">{feature.descricao}</p>
                 </CardContent>
               </Card>
             </motion.div>

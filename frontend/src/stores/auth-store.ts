@@ -2,11 +2,12 @@ import { create } from "zustand"
 import { persist, createJSONStorage } from "zustand/middleware"
 
 export type User = {
-  id: string 
-  name: string 
-  email: string 
-  avatar?: string 
-  createdAt: string
+  id: string; 
+  vc_user_name: string;
+  email: string;
+  vc_pnome?: string;
+  vc_unome?: string;
+  vc_foto_perfil?: string;
 }
 
 type AuthState = {
@@ -26,15 +27,15 @@ type AuthState = {
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
-      user: null, // Nenhum usuário logado inicialmente
-      token: null, // Nenhum token inicialmente
-      isAuthenticated: false, // Não autenticado inicialmente
+      user: null,
+      token: null, 
+      isAuthenticated: false,
 
       login: (user, token) => {
         set({
-          user, // Salva dados do usuário
-          token, // Salva token JWT
-          isAuthenticated: true, // Marca como autenticado
+          user, 
+          token, 
+          isAuthenticated: true, 
         })
       },
 

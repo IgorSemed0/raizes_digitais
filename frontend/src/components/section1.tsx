@@ -1,9 +1,9 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { LoginForm } from "./login-form"
 import { Button } from "./ui/button"
-import { TreeDeciduous,  Users, Heart } from "lucide-react"
+import { TreeDeciduous, Users, Heart} from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -14,62 +14,107 @@ import {
 } from "@/components/ui/dialog"
 
 export default function Hero() {
+ 
   const [aberto, setAberto] = useState(false)
-
+  const [usuario, setusuarios]=useState(0)
+ 
+  /* useEffect(() => {
+  const buscar = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/usuarios/count")
+      
+      if (!res.ok) {
+        throw new Error('Erro ao contar usuários')
+      }
+      
+      const data = await res.json()
+      
+      if (data.success) {
+        setusuarios(data.total)
+        console.log(data)
+      } else {
+        console.error('Erro na API:', data.message)
+      }
+    } catch (error) {
+      console.error('Erro ao contar usuários:', error)
+    }
+  } 
+  
+  buscar()
+}, []) */
   return (
-    <main className="w-full bg-slate-950">
+    <main className="w-full bg-linear-to-br from-white via-gray-50 to-emerald-50 dark:from-slate-950 dark:via-slate-900 dark:to-emerald-950/30">
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden"
       >
-        <div className="absolute inset-0 bg-linear-to-br from-slate-950 via-slate-900 to-emerald-950/20" />
-
+        <div className="absolute inset-0  dark:from-emerald-950/20" />
+        
         <motion.div
           animate={{
-            y: [0, -20, 0],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-          }}
-          className="absolute top-20 left-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, 20, 0],
-            rotate: [0, -5, 0],
+            y: [0, -40, 0],
+            rotate: [0, 10, 0],
+            scale: [1, 1.1, 1],
           }}
           transition={{
             duration: 8,
             repeat: Number.POSITIVE_INFINITY,
             ease: "easeInOut",
           }}
-          className="absolute bottom-20 right-10 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"
+          className="absolute top-20 left-10 w-72 h-72 bg-emerald-400/10 rounded-full blur-3xl hidden dark:block"
+        />
+        <motion.div
+          animate={{
+            y: [0, 40, 0],
+            rotate: [0, -10, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+          className="absolute bottom-20 right-10 w-96 h-96 bg-green-400/10 rounded-full blur-3xl hidden dark:block"
+        />
+
+        <motion.div
+          animate={{
+            y: [0, -30, 0],
+            rotate: [0, 5, 0],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+          className="absolute top-1/4 left-20 w-64 h-64 bg-emerald-300/20 rounded-full blur-3xl dark:hidden"
+        />
+        <motion.div
+          animate={{
+            y: [0, 30, 0],
+            rotate: [0, -8, 0],
+          }}
+          transition={{
+            duration: 9,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
+          className="absolute bottom-1/4 right-20 w-80 h-80 bg-green-300/15 rounded-full blur-3xl dark:hidden"
         />
 
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-         {/*  <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium mb-8 backdrop-blur-sm"
-          >
-            <Sparkles className="w-4 h-4" />
-            Conectando +50K famílias
-          </motion.div> */}
+          
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
+            className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight"
           >
             Preserve Sua História
-            <span className="block bg-linear-to-r from-emerald-400 to-green-500 bg-clip-text text-transparent">
+            <span className="block bg-linear-to-r from-emerald-600 via-green-600 to-teal-600 dark:from-emerald-400 dark:to-green-500 bg-clip-text text-transparent">
               Familiar para Sempre
             </span>
           </motion.h1>
@@ -78,10 +123,10 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-gray-600 dark:text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed font-light"
           >
             Crie sua árvore genealógica interativa, compartilhe álbuns familiares e conecte gerações em uma plataforma
-            segura
+            segura e moderna
           </motion.p>
 
           <motion.div
@@ -93,7 +138,7 @@ export default function Hero() {
             <Button
               onClick={() => setAberto(true)}
               size="lg"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-6 text-lg rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-emerald-500/25"
+              className="bg-linear-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-semibold px-8 py-6 text-lg rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 dark:shadow-emerald-500/15"
             >
               <TreeDeciduous className="w-5 h-5 mr-2" />
               Criar Minha Árvore
@@ -101,7 +146,7 @@ export default function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white font-semibold px-8 py-6 text-lg rounded-xl transition-all duration-300 backdrop-blur-sm bg-transparent"
+              className="border-2 border-gray-300 dark:border-slate-700 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800 hover:border-emerald-300 dark:hover:border-emerald-600 font-semibold px-8 py-6 text-lg rounded-xl transition-all duration-300 backdrop-blur-sm bg-white/50 dark:bg-transparent"
             >
               Ver Como Funciona
             </Button>
@@ -114,18 +159,21 @@ export default function Hero() {
             className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
           >
             {[
-              { icon: Users, label: "Famílias Conectadas", value: 0 },
+              { icon: Users, label: "Famílias Conectadas", value: usuario },
               { icon: Heart, label: "Memórias Preservadas", value: 0 },
-              { icon: TreeDeciduous, label: "Gerações Mapeadas", value: 0},
+              { icon: TreeDeciduous, label: "Gerações Mapeadas", value: 0 },
             ].map((stat, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-xl p-6 hover:border-emerald-500/50 transition-colors"
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-gray-200 dark:border-slate-800 rounded-2xl p-6 hover:border-emerald-300 dark:hover:border-emerald-500 transition-all duration-300 shadow-sm hover:shadow-md"
               >
-                <stat.icon className="w-8 h-8 text-emerald-400 mb-3 mx-auto" />
-                <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-sm text-slate-400">{stat.label}</div>
-              </div>
+                <div className="bg-emerald-100 dark:bg-emerald-900/30 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <stat.icon className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1">{stat.value}</div>
+                <div className="text-sm text-gray-600 dark:text-slate-400 font-medium">{stat.label}</div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
@@ -133,11 +181,10 @@ export default function Hero() {
 
       <Dialog open={aberto} onOpenChange={setAberto}>
         <DialogTrigger />
-        <DialogContent className="bg-slate-900 border-slate-800">
+        <DialogContent className="bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 backdrop-blur-sm">
           <DialogHeader>
-            <DialogTitle className="text-white">Bem-vindo de volta</DialogTitle>
-            <DialogDescription className="text-slate-400">
-              Entre na sua conta para continuar preservando sua história familiar
+            <DialogTitle className="text-gray-900 dark:text-white"></DialogTitle>
+            <DialogDescription className="text-gray-600 dark:text-slate-400">
             </DialogDescription>
           </DialogHeader>
           <LoginForm />

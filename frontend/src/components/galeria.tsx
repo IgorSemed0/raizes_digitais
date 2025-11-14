@@ -17,7 +17,7 @@ export default function Galeria() {
   ]
 
   return (
-    <section className="w-full py-20 bg-linear-to-b from-slate-950 to-slate-900">
+    <section className="w-full py-20 bg-linear-to-br from-white via-gray-50 to-emerald-50 dark:from-slate-950 dark:via-slate-900 dark:to-emerald-950/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -26,7 +26,7 @@ export default function Galeria() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Memórias que Duram para Sempre</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-6">Memórias que Duram para Sempre</h2>
           <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-8">
             Veja como famílias estão preservando seus momentos mais preciosos em álbuns colaborativos
           </p>
