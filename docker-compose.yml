@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+      target: development
       args:
         PHP_VERSION: 8.3
     container_name: raizes_php
@@ -10,6 +11,10 @@ services:
     working_dir: /var/www
     volumes:
       - .:/var/www
+      - node_modules:/var/www/node_modules
+      - frontend_node_modules:/var/www/frontend/node_modules
+      - backend_node_modules:/var/www/backend/node_modules
+      - backend_vendor:/var/www/backend/vendor
       - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
     depends_on:
       - postgres
@@ -17,6 +22,7 @@ services:
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
+      - NODE_ENV=development
     ports:
       - "8000:8000"
       - "3000:3000"
@@ -65,6 +71,10 @@ services:
 
 volumes:
   pgdata:
+  node_modules:
+  frontend_node_modules:
+  backend_node_modules:
+  backend_vendor:
 
 networks:
   raizes:
