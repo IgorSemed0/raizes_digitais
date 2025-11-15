@@ -52,73 +52,80 @@ ps: ## Show running containers
 ##@ Application
 
 shell: ## Open shell in app container
-	docker compose exec app sh
+	@docker compose exec app sh
 
 shell-root: ## Open shell as root in app container
-	docker compose exec -u root app sh
+	@docker compose exec -u root app sh
 
 install: ## Install dependencies (npm + composer)
 	@echo "$(BLUE)Installing dependencies...$(NC)"
-	docker compose exec app npm install
-	docker compose exec app sh -c "cd backend && composer install"
+	@docker compose exec -T app npm install
+	@docker compose exec -T app sh -c "cd backend && composer install"
 
 dev: ## Start development servers (Laravel + Next.js)
 	@echo "$(GREEN)Starting development servers...$(NC)"
-	docker compose exec app sh -c "php artisan serve --host=0.0.0.0 --port=8000 & cd frontend && npm run dev"
+	@echo "$(YELLOW)Press Ctrl+C to stop both servers$(NC)"
+	docker compose exec app npm run dev
 
 dev-frontend: ## Start only Next.js development server
-	docker compose exec app sh -c "cd frontend && npm run dev"
+	@echo "$(GREEN)Starting Next.js development server...$(NC)"
+	@docker compose exec app sh -c "cd frontend && npm run dev"
 
 dev-backend: ## Start only Laravel development server
-	docker compose exec app php artisan serve --host=0.0.0.0 --port=8000
+	@echo "$(GREEN)Starting Laravel development server...$(NC)"
+	@docker compose exec app sh -c "cd backend && php artisan serve --host=0.0.0.0 --port=8000"
 
 build-frontend: ## Build Next.js for production
-	docker compose exec app sh -c "cd frontend && npm run build"
+	@echo "$(BLUE)Building Next.js for production...$(NC)"
+	docker compose exec -T app sh -c "cd frontend && npm run build"
 
 ##@ Database
 
 migrate: ## Run database migrations
 	@echo "$(BLUE)Running migrations...$(NC)"
-	docker compose exec app php artisan migrate
+	docker compose exec -T app sh -c "cd backend && php artisan migrate"
 
 migrate-fresh: ## Fresh migration (drops all tables)
 	@echo "$(RED)Running fresh migrations...$(NC)"
-	docker compose exec app php artisan migrate:fresh
+	docker compose exec -T app sh -c "cd backend && php artisan migrate:fresh"
 
 seed: ## Seed the database
 	@echo "$(BLUE)Seeding database...$(NC)"
-	docker compose exec app php artisan db:seed
+	docker compose exec -T app sh -c "cd backend && php artisan db:seed"
 
 fresh: ## Fresh migration with seeding
 	@echo "$(YELLOW)Running fresh migrations with seeding...$(NC)"
-	docker compose exec app php artisan migrate:fresh --seed
+	docker compose exec -T app sh -c "cd backend && php artisan migrate:fresh --seed"
 
 db-shell: ## Open PostgreSQL shell
-	docker compose exec postgres psql -U raizes -d raizes
+	@docker compose exec postgres psql -U raizes -d raizes
 
 db-reset: down ## Reset database (remove volume and restart)
-	docker volume rm raizes-digitais_pgdata || true
-	docker compose up -d
+	@echo "$(YELLOW)Resetting database...$(NC)"
+	@docker volume rm raizes-digitais_pgdata || true
+	@docker compose up -d
 
 ##@ Testing & Quality
 
 test: ## Run all tests
 	@echo "$(BLUE)Running tests...$(NC)"
-	docker compose exec app turbo run test
+	docker compose exec -T app turbo run test
 
 test-backend: ## Run Laravel tests
-	docker compose exec app sh -c "cd backend && php artisan test"
+	@echo "$(BLUE)Running Laravel tests...$(NC)"
+	docker compose exec -T app sh -c "cd backend && php artisan test"
 
 test-frontend: ## Run Next.js tests
-	docker compose exec app sh -c "cd frontend && npm test"
+	@echo "$(BLUE)Running Next.js tests...$(NC)"
+	docker compose exec -T app sh -c "cd frontend && npm test"
 
 lint: ## Run linters
 	@echo "$(BLUE)Running linters...$(NC)"
-	docker compose exec app turbo run lint
+	docker compose exec -T app turbo run lint
 
 format: ## Format code with Prettier
 	@echo "$(BLUE)Formatting code...$(NC)"
-	docker compose exec app npm run format
+	docker compose exec -T app npm run format
 
 ##@ Cleanup
 
@@ -148,37 +155,37 @@ clean-vendor: ## Remove vendor volume
 ##@ Utilities
 
 artisan: ## Run artisan command (usage: make artisan CMD="migrate")
-	docker compose exec app php artisan $(CMD)
+	docker compose exec -T app sh -c "cd backend && php artisan $(CMD)"
 
 composer: ## Run composer command (usage: make composer CMD="require package")
-	docker compose exec app sh -c "cd backend && composer $(CMD)"
+	docker compose exec -T app sh -c "cd backend && composer $(CMD)"
 
 npm: ## Run npm command in root (usage: make npm CMD="install")
-	docker compose exec app npm $(CMD)
+	docker compose exec -T app npm $(CMD)
 
 npm-frontend: ## Run npm in frontend (usage: make npm-frontend CMD="install")
-	docker compose exec app sh -c "cd frontend && npm $(CMD)"
+	docker compose exec -T app sh -c "cd frontend && npm $(CMD)"
 
 npm-backend: ## Run npm in backend (usage: make npm-backend CMD="install")
-	docker compose exec app sh -c "cd backend && npm $(CMD)"
+	docker compose exec -T app sh -c "cd backend && npm $(CMD)"
 
 cache-clear: ## Clear Laravel caches
 	@echo "$(BLUE)Clearing caches...$(NC)"
-	docker compose exec app php artisan cache:clear
-	docker compose exec app php artisan config:clear
-	docker compose exec app php artisan route:clear
-	docker compose exec app php artisan view:clear
+	docker compose exec -T app sh -c "cd backend && php artisan cache:clear"
+	docker compose exec -T app sh -c "cd backend && php artisan config:clear"
+	docker compose exec -T app sh -c "cd backend && php artisan route:clear"
+	docker compose exec -T app sh -c "cd backend && php artisan view:clear"
 
 optimize: ## Optimize Laravel for production
 	@echo "$(GREEN)Optimizing Laravel...$(NC)"
-	docker compose exec app php artisan config:cache
-	docker compose exec app php artisan route:cache
-	docker compose exec app php artisan view:cache
+	docker compose exec -T app sh -c "cd backend && php artisan config:cache"
+	docker compose exec -T app sh -c "cd backend && php artisan route:cache"
+	docker compose exec -T app sh -c "cd backend && php artisan view:cache"
 
 permissions: ## Fix storage permissions
 	@echo "$(BLUE)Fixing permissions...$(NC)"
-	docker compose exec -u root app chown -R www-data:www-data backend/storage backend/bootstrap/cache
-	docker compose exec -u root app chmod -R 775 backend/storage backend/bootstrap/cache
+	@docker compose exec -u root app chown -R www-data:www-data backend/storage backend/bootstrap/cache
+	@docker compose exec -u root app chmod -R 775 backend/storage backend/bootstrap/cache
 
 ##@ Quick Start
 
